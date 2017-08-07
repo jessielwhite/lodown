@@ -128,7 +128,7 @@ module.exports.filter = filter;
  */
  function reject(array, test){
     const rejected = [];
-    filter(array, function(element, index, array){
+    each(array, function(element, index, array){
         if(!test(element, index, array)) rejected.push(element);
     });
     return rejected;
@@ -137,8 +137,8 @@ module.exports.reject = reject;
 
 /**
  * partition: Designed to take a collection and a Function, and call the
- * Function (filter) for each element in the collection that passes filter's
- * arguments. It is to return an array made up of two sub-arrays: one
+ * test function for each element in the collection.
+ * It is to return an array made up of two sub-arrays: one
  * containing all the values for which the Function returned something truthy,
  * and one containing all the values for which the Function returned something
  * falsey.
@@ -147,7 +147,7 @@ module.exports.reject = reject;
  */
  function partition(array, test){
   const partitioned = [[], []];
-  filter(array, function(element, index, array){
+  each(array, function(element, index, array){
       if(test(element, index, array)){
           partitioned[0].push(element);
       } else {
@@ -246,6 +246,7 @@ module.exports.every = every;
  * @param {Function} The function to be applied to each element.
  */
  function some(coll, func) {
+     
     let result = false;
     if (typeof func === 'function') {
         each(coll, function(element, index, array) {
